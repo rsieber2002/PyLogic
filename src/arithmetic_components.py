@@ -76,3 +76,21 @@ class Comparator(Component):
 
 	def update(self):
 		self["out"].set_value(int(self.input_state["A"] == self.input_state["B"]))
+
+class Subtractor(Component):
+    def __init__(self, input_size):
+        inputs = {"A" : input_size, "B" : input_size, "Bi" : 1}
+        outputs = {"D" : input_size, "Bo" : 1}
+        Component.__init__(self, inputs, outputs)
+
+    def update(self):
+        if self.input_state["A"] == None or self.input_state["B"] == None or self.input_state["Bi"] == None:
+            result = None
+        else:
+            result = self.input_state["A"] + self.input_state["Bi"] - self.input_state["B"]
+        self["D"].set_value(result)
+
+        if result is not None:
+            self["Bo"].set_value((result >> self["A"].size()) & 1)
+        else:
+            self["Bo"].set_value(None)
