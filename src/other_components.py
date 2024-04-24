@@ -55,15 +55,33 @@ class Splitter8Bit(Component):
 			else:
 				self[i].set_value(None)
 
-class Decoder(Component):
-	def __init__(self):
-		inputs = { "A" : 1, "B" : 1}
-		outputs = { "C" : 1, "D" : 1, "E" : 1, "F" : 1}
-		Component.__init__(self, inputs, outputs)
+#class Decoder(Component):
+#	def __init__(self):
+#		inputs = { "A" : 1, "B" : 1}
+#		outputs = { "C" : 1, "D" : 1, "E" : 1, "F" : 1}
+#		Component.__init__(self, inputs, outputs)
+#
+#	def update(self):
+#		if self.input_state["A"] == None and self.input_state["B"] == None:
+#			self["C"].set_value(1) #This may not work, need to check the syntax of the component class
+#		else:
+#			result = self.input_state["A"] + self.input_state["B"] + self.input_state["Ci"]
+#		self["S"].set_value(result)
 
-	def update(self):
-		if self.input_state["A"] == None and self.input_state["B"] == None:
-			self["C"].set_value(1) #This may not work, need to check the syntax of the component class
-		else:
-			result = self.input_state["A"] + self.input_state["B"] + self.input_state["Ci"]
-		self["S"].set_value(result)
+class Decoder(Component):
+    def __init__(self, num_outputs):
+        bits = len(bin(num_outputs - 1)) - 2
+        inputs = {"in" : bits}
+        outputs = {}
+        for i in range(num_outputs):
+            outputs[i] = 1
+        Component.__init__(self, inputs, outputs)
+
+    def update(self):
+        input_value = self.input_state["in"]
+        if input_value is None:
+            for i in range(len(self.outputs)):
+                self[i].set_value(None)
+        else:
+            for i in range(len(self.outputs)):
+                self[i].set_value(1 if i == input_value else 0)
