@@ -1,5 +1,5 @@
 import unittest
-from basic_parts import Encoder
+from pylogic import *
 
 class TestEncoder(unittest.TestCase):
     def test_encoder_output(self):

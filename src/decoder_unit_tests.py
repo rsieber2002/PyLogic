@@ -1,5 +1,5 @@
 import unittest
-from basic_parts import Decoder
+from pylogic import *
 
 class TestDecoder(unittest.TestCase):
     def test_decoder_output(self):
