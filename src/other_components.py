@@ -77,7 +77,6 @@ class Decoder(Component):
             else:
                 self[i].set_value(0)
 
-
 class Encoder(Component):
     def __init__(self, num_inputs):
         bits = len(bin(num_inputs - 1)) - 2
