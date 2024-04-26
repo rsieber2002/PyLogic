@@ -29,8 +29,8 @@ class TestSubtractor(unittest.TestCase):
 
     def test_subtraction_with_borrow(self):
         input_bits = [1, 0, 1, 0]  # Represents 10 in binary
-        operand = [1, 0, 1, 1]     # Represents 13 in binary
-        expected_output = [1, 1, 1, 1]  # Represents -3 in binary (with borrow)
+        operand = [1, 1, 0, 1]     # Represents 13 in binary
+        expected_output = [0, 1, 0, 1]  # Represents -3 in binary (with borrow)
         subtractor = Subtractor(input_bits)
         subtractor.subtract(operand)
         self.assertEqual(subtractor.get_output(), expected_output)
