@@ -56,22 +56,27 @@ class Splitter8Bit(Component):
 				self[i].set_value(None)
 
 class Decoder(Component):
-    def __init__(self, num_outputs):
-        bits = len(bin(num_outputs - 1)) - 2
-        inputs = {"in" : bits}
+    def __init__(self, input_size):
+        num_outputs = 2 ** input_size
+        inputs = {"in": input_size}
         outputs = {}
         for i in range(num_outputs):
             outputs[i] = 1
         Component.__init__(self, inputs, outputs)
 
     def update(self):
-        input_value = self.input_state["in"]
-        if input_value is None:
+        input_val = self.input_state["in"]
+        if input_val is None:
             for i in range(len(self.outputs)):
                 self[i].set_value(None)
-        else:
-            for i in range(len(self.outputs)):
-                self[i].set_value(1 if i == input_value else 0)
+            return
+
+        for i in range(len(self.outputs)):
+            if input_val == i:
+                self[i].set_value(1)
+            else:
+                self[i].set_value(0)
+
 
 class Encoder(Component):
     def __init__(self, num_inputs):
