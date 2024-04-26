@@ -78,23 +78,23 @@ class Decoder(Component):
                 self[i].set_value(0)
 
 class Encoder(Component):
-    def __init__(self, num_inputs):
-        bits = len(bin(num_inputs - 1)) - 2
+    def __init__(self, input_size):
+        num_outputs = 2 ** input_size
         inputs = {}
-        for i in range(num_inputs):
+        for i in range(input_size):
             inputs[i] = 1
-        outputs = {"out": bits}
+        outputs = {"out": input_size}
         Component.__init__(self, inputs, outputs)
 
     def update(self):
-        active_input = None
-        for input_line, value in self.input_state.items():
-            if value == 1:
-                active_input = input_line
-                break
-        if active_input is None:
-            self["out"].set_value(None)
-        else:
-            binary_representation = bin(active_input)[2:].zfill(len(self.outputs["out"]))
-            self["out"].set_value(int(binary_representation))
+        input_val = 0
+        for i in range(len(self.inputs)):
+            bit = self.input_state[i]
+            if bit is None:
+                self["out"].set_value(None)
+                return
+            input_val |= (bit << i)
+
+        self["out"].set_value(input_val)
+
 
