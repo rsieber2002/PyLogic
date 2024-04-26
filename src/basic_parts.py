@@ -46,9 +46,9 @@ class Component(object):
 			elif key in self.outputs:
 				io = self.outputs[key]
 			else:
-				print "no such io for [%s]: %s" % (name, str(key))
+				print ("no such io for [%s]: %s" % (name, str(key)))
 				return
-			print "size mismatch for [%s]: got %i, expected %i" % (name, wire.size(), io)
+			print ("size mismatch for [%s]: got %i, expected %i" % (name, wire.size(), io))
 
 	# updates state to reflect value of wires
 	def update_state(self):
@@ -129,13 +129,13 @@ class Wire(object):
 		for i in range(self.bits):
 			if i not in d or d[i] != 1:
 				self.value = None
-				print "Wire splice mismatch"
+				print ("Wire splice mismatch")
 			else:
 				del d[i]
 
 		if len(d) != 0:
 			self.value = None
-			print "Wire splice mismatch"
+			print ("Wire splice mismatch")
 
 		if self.value is not None:
 			return self.value & mask
@@ -293,16 +293,16 @@ class Circuit(object):
 			except:
 				val = str(component[io].get_value())
 			result += label + " : " + val + " | "
-		print result
+		print (result)
 
 	def print_waveform(self):
 		sidelength = len(max(self.labels, key=len))
 
 		# print top step bar
-		print " " * sidelength,
+		print (" " * sidelength,) #Might need to fix some junk here
 		for i in range(self.cycle):
-			print str(i % 10),
-		print
+			print (str(i % 10),)
+		print (" ")
 
 		# print cycles for each label
 		for label in self.labels:
@@ -331,8 +331,8 @@ class Circuit(object):
 				else:
 					linetop    += '\xe2\x94\x80' if vals[i] != 0 else " "
 					linebottom += '\xe2\x94\x80' if vals[i] == 0 else " "
-			print linetop
-			print linebottom
+			print (linetop)
+			print (linebottom)
 
 	# returns clock
 	def get_clk(self):
