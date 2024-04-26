@@ -23,29 +23,29 @@ class TestEncoder(unittest.TestCase):
 
         # Test input 0
         encoded_value = encoder.encode([1])
-        self.assertEqual(encoded_value, 0)
+        self.assertEqual(encoded_value, 1)
 
         # Test input 1
         encoded_value = encoder.encode([0])
-        self.assertEqual(encoded_value, 1)
+        self.assertEqual(encoded_value, 0)
 
     def test_encoder_2_bit(self):
         encoder = Encoder(input_size=2)
 
         # Test input 00
-        encoded_value = encoder.encode([1, 1])
+        encoded_value = encoder.encode([0, 0])
         self.assertEqual(encoded_value, 0)
 
         # Test input 01
-        encoded_value = encoder.encode([0, 1])
+        encoded_value = encoder.encode([1, 0])
         self.assertEqual(encoded_value, 1)
 
         # Test input 10
-        encoded_value = encoder.encode([1, 0])
+        encoded_value = encoder.encode([0, 1])
         self.assertEqual(encoded_value, 2)
 
         # Test input 11
-        encoded_value = encoder.encode([0, 0])
+        encoded_value = encoder.encode([1, 1])
         self.assertEqual(encoded_value, 3)
 
     def test_encoder_invalid_input_size(self):
